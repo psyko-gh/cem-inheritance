@@ -29,6 +29,12 @@ export function updateCemInheritance(
     log.yellow("[cem-inheritance] - Skipped");
     return;
   }
+  // Reset states to support watch mode
+  completedClasses.clear();
+  classQueue = [];
+  cemEntities = [];
+  externalComponents = [];
+  externalMixins = [];
 
   log.log("[cem-inheritance] - Updating Custom Elements Manifest...");
   const newCem = generateUpdatedCem(cem, options);
