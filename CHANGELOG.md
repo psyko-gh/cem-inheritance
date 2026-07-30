@@ -1,5 +1,11 @@
 # @wc-toolkit/cem-inheritance
 
+## 1.2.3
+
+### Patch Changes
+
+- e906aec: support --watch mode of cem analyzer by clearing global variables
+
 ## 1.2.2
 
 ### Patch Changes
