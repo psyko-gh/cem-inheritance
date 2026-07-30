@@ -23,6 +23,17 @@ export type CemInheritanceOptions = {
   skip?: boolean;
   /** Map of class names to alternative class names */
   aliasMap?: Record<string, string>;
+  /**
+   * Map of local variable names (holding mixin call results) to the
+   * base class name they resolve to.
+   *
+   * Example: given `const Mixed = mixin(Base); class Foo extends Mixed {}`,
+   * pass `{ Mixed: "Base" }` so that the plugin treats `Foo` as extending `Base`.
+   *
+   * When used as a CEM analyzer plugin this map is populated automatically
+   * during the analyze phase.
+   */
+  mixinVariableMap?: Record<string, string>;
   /** @internal Used to indicate if this is used as a CEM a plugin */
   usedByPlugin?: boolean;
 };

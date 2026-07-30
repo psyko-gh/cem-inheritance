@@ -232,4 +232,49 @@ describe("cem-inheritance", () => {
     // and alias should be applied to map to 'RealParent'
     expect(resolved).toBe(realParent);
   });
+
+  test("should resolve superclass from mixin variable map", () => {
+    const mixinVarCem = {
+      schemaVersion: "1.0.0",
+      modules: [
+        {
+          kind: "javascript-module",
+          path: "test/mixins.ts",
+          declarations: [
+            {
+              kind: "class",
+              name: "MyMixinVarComponent",
+              superclass: { name: "MixedElement" },
+              tagName: "my-mixin-var-component",
+              customElement: true,
+              members: [
+                { kind: "field", name: "ownProp", type: { text: "string" } },
+              ],
+              modulePath: "test/mixins.ts",
+            },
+            {
+              kind: "class",
+              name: "BaseComponent",
+              members: [
+                { kind: "field", name: "baseProp", type: { text: "number" } },
+              ],
+              superclass: { name: "HTMLElement" },
+              tagName: "base-component",
+              customElement: true,
+              modulePath: "test/mixins.ts",
+            },
+          ],
+        },
+      ],
+    };
+
+    const result = generateUpdatedCem(mixinVarCem, {
+      mixinVariableMap: { MixedElement: "BaseComponent" },
+    });
+
+    const component = getComponentByClassName(result, "MyMixinVarComponent");
+    expect(component?.superclass?.name).toBe("BaseComponent");
+    expect(component?.members?.find((m) => m.name === "baseProp")).toBeTruthy();
+    expect(component?.members?.find((m) => m.name === "ownProp")).toBeTruthy();
+  });
 });

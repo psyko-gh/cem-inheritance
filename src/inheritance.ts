@@ -100,6 +100,14 @@ export function generateUpdatedCem(
     );
   }
 
+  // Resolve superclass names that reference mixin local variables
+  if (userConfig.mixinVariableMap) {
+    resolveMixinVariableSuperclasses(
+      cem as cem.Package,
+      userConfig.mixinVariableMap
+    );
+  }
+
   cemEntities = getDeclarations(cem, userConfig.exclude);
   const cemMap = createComponentMap(cemEntities);
   const externalMap = createComponentMap(externalComponents);
@@ -147,6 +155,32 @@ export function resolveParent(
     parent = externalMap?.get(parentName) || cemParent;
   }
   return parent;
+}
+
+/**
+ * Resolves class superclass names that reference local variable names
+ * holding mixin call results (e.g., `const Mixed = mixin(Base)`).
+ *
+ * Mutates the CEM module declarations in place.
+ */
+function resolveMixinVariableSuperclasses(
+  cem: cem.Package,
+  mixinVariableMap: Record<string, string>
+): void {
+  if (!cem.modules) return;
+  for (const mod of cem.modules) {
+    if (!mod.declarations) continue;
+    for (const decl of mod.declarations) {
+      if (
+        decl.kind === "class"
+        && "superclass" in decl
+        && decl.superclass?.name
+        && mixinVariableMap[decl.superclass.name]
+      ) {
+        decl.superclass.name = mixinVariableMap[decl.superclass.name];
+      }
+    }
+  }
 }
 
 function getAncestors(
