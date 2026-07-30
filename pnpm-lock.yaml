@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@wc-toolkit/cem-utilities':
+        specifier: ^1.2.0
+        version: 1.2.0
       '@wc-toolkit/jsdoc-tags':
         specifier: ^1.1.0
         version: 1.1.0
@@ -24,9 +27,6 @@ importers:
       '@types/node':
         specifier: ^22.13.2
         version: 22.13.2
-      '@wc-toolkit/cem-utilities':
-        specifier: ^1.2.0
-        version: 1.2.0
       comment-parser:
         specifier: ^1.4.1
         version: 1.4.1
