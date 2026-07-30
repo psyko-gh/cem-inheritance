@@ -1,5 +1,11 @@
 # @wc-toolkit/cem-inheritance
 
+## 1.2.4
+
+### Patch Changes
+
+- 23485d4: Move @wc-toolkit/cem-utilities from devDependencies to dependencies to fix runtime import error
+
 ## 1.2.3
 
 ### Patch Changes
