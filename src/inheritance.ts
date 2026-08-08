@@ -277,7 +277,6 @@ function updateApi(
     updateClassMembers(component, parent, api, omit);
     return;
   }
-  // addApiFromMixin(component, api, omit);
 
   if (userConfig.ignore?.includes(api)) {
     return;
@@ -312,7 +311,7 @@ function updateApi(
 
   component[api] = (component[api] as any[])?.filter(
     (a) => !omit.includes(a.name)
-  );
+  )
 
   if (api === "attributes" && component.members?.length && omit.length) {
     const omittedAttributeFields = component.attributes
